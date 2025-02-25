@@ -59,7 +59,7 @@
             margin: 10px 0;
             transition: font-size .8s;
         }
-        .clubs { grid-area: clubs; width: 300px; }
+        .clubs { grid-area: clubs; width: 600px; height: 450px; }
         .basketball { grid-area: basketball; width: 600px; height: 450px; }
         .fundraisers { grid-area: fundraisers; width: 300px; }
         .club-boxes {
@@ -83,7 +83,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: fadeIn .5s forwards;
+            animation: fadeIn 0s forwards;
             transition: all 1.2s cubic-bezier(.6,0,.4,1);
             margin: 0 auto 10px;
             overflow: hidden;
@@ -119,7 +119,7 @@
             height: 100%;
             object-fit: contain;
             opacity: 0;
-            transition: opacity 2s ease-in-out, width 0.3s ease, height 0.3s ease, top 0.3s ease;
+            transition: opacity 4s ease-in-out, width 0.3s ease, height 0.3s ease, top 0.3s ease;
             z-index: 100;
         }
         .club-box img.active {
@@ -175,7 +175,7 @@
             visibility: hidden;
         }
         .club-box.expanded-clicked .image-container {
-            height: 250px;
+            height: 450px;
             margin: 20px auto;
         }
         .club-box.expanded-clicked h3 {
@@ -325,15 +325,15 @@
         <h1>Today at <span>TZ</span></h1>
     </header>
     <div class="content">
-        <a href="#" class="card clubs" id="clubsCard">
+        <a href="" class="card clubs" id="clubsCard">
             <h2>Clubs Today</h2>
             <img src="images/clubs.jpg" alt="Clubs" id="clubsImage">
         </a>
-        <a href="#" class="card basketball" id="basketballCard">
+        <a href="" class="card basketball" id="basketballCard">
             <h2>Basketball Game<br>Against Pearl River!</h2>
             <img src="images/basketball.webp" alt="Basketball Game">
         </a>
-        <a href="#" class="card fundraisers" id="fundraisersCard">
+        <a href="" class="card fundraisers" id="fundraisersCard">
             <h2>Fund Raisers</h2>
             <img src="images/fundraisers.png" alt="Fund Raisers">
         </a>
