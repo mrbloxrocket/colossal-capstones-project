@@ -29,8 +29,8 @@
         .content {
             display: grid;
             grid-template-areas: 
-                "clubs basketball"
-                "fundraisers basketball";
+                "clubs studentGames"
+                "fundraisers studentGames";
             gap: 20px;
             margin: 20px;
         }
@@ -60,7 +60,7 @@
             transition: font-size .8s;
         }
         .clubs { grid-area: clubs; width: 600px; height: 450px; }
-        .basketball { grid-area: basketball; width: 600px; height: 450px; }
+        .studentGames { grid-area: studentGames; width: 600px; height: 450px; }
         .fundraisers { grid-area: fundraisers; width: 300px; }
         .club-boxes {
             display: none;
@@ -329,8 +329,8 @@
             <h2>Clubs Today</h2>
             <img src="images/clubs.jpg" alt="Clubs" id="clubsImage">
         </a>
-        <a href="" class="card basketball" id="basketballCard">
-            <h2>Basketball Game<br>Against Pearl River!</h2>
+        <a href="" class="card studentGames" id="studentGamesCard">
+            <h2>Student Made Games</h2>
             <iframe width="560" height="360"
                 src="https://events.locallive.tv/events/170818"frameborder="0"
                 allowfullscreen>
@@ -576,7 +576,7 @@
             
             if (!clubsCard.classList.contains('expanding')) {
                 document.body.classList.add('no-scroll');
-                basketballCard.classList.add('disabled');
+                studentGamesCard.classList.add('disabled');
                 fundraisersCard.classList.add('disabled');
                 clubsCard.classList.add('expanding');
                 clubsImage.style.opacity = '0';
