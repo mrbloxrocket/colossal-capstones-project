@@ -19,7 +19,6 @@
             margin: 10px;
         }
         header h1 {
-            height: 0px;
             font-size: 2.5rem;
             color: #333333;
         }
@@ -30,8 +29,8 @@
         .content {
             display: grid;
             grid-template-areas: 
-                "clubs studentGames"
-                "fundraisers studentGames";
+                "clubs basketball"
+                "fundraisers basketball";
             gap: 20px;
             margin: 20px;
         }
@@ -41,60 +40,93 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             text-align: center;
             padding: 10px;
-            transition: transform .2s;
             position: relative;
             z-index: 1;
-        }
-        .card:hover {
-            transform: scale(1.05);
-            cursor: pointer;
         }
         .card img {
             max-width: 100%;
             border-radius: 5px;
-            transition: all .8s;
         }
         .card h2 {
             font-size: 1.5rem;
             color: #333;
             margin: 10px 0;
-            transition: font-size .8s;
         }
-        .clubs { grid-area: clubs; width: 300px; height: 225px; }
-        .studentGames { grid-area: studentGames; width: 600px; height: 450px; }
-        .fundraisers { grid-area: fundraisers; width: 300px; height: 225px }
-        .club-boxes {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 11;
-            padding-top: 200px;
+        .clubs { 
+            grid-area: clubs; 
+            width: 500px;
+            height: 450px;
             overflow: hidden;
-            opacity: 0;
-            /*transition: opacity .8s;*/
-            isolation: isolate;
+        }
+        .basketball { grid-area: basketball; width: 600px; height: 450px; }
+        .fundraisers { grid-area: fundraisers; width: 500px; }
+        .club-boxes {
+            display: block;
+            position: relative;
+            z-index: 11;
+            overflow: auto;
+            opacity: 1;
+            height: calc(100% - 60px);
+            transform: scale(1);
+            transform-origin: top left;
+            padding-right: 10px;
+        }
+        .club-boxes.no-scroll {
+            overflow: hidden;
         }
         .club-box {
-            height:0px;
             background: #f8f8f8;
             border-radius: 8px;
-            font-size: 2.4rem;
+            font-size: 1.2rem;
             cursor: pointer;
             opacity: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: fadeIn 0s forwards;
-            transition: all 1.2s cubic-bezier(.6,0,.4,1);
+            animation: fadeIn .5s forwards;
             margin: 0 auto 10px;
             overflow: hidden;
             position: relative;
             z-index: 1;
+            width: 100%;
+            height: 180px;
+        }
+        .club-box.expanded-box {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ffffff;
+            z-index: 100;
+            padding: 20px;
+            overflow-y: auto;
+            width: 100%;
+            margin: 0;
+        }
+        .club-box.expanded-box .image-container {
+            width: 300px;
+            height: 300px;
+            margin: 40px auto 20px;
+        }
+        .club-box.expanded-box img {
+            opacity: 1;
+            width: 100%;
+            height: 100%;
+            margin-top: 20px;
+        }
+        .club-box.expanded-box .description {
+            display: block;
+            opacity: 1;
+            margin-top: 20px;
+            text-align: left;
+            padding: 0 20px;
         }
         .club-box h3 {
             color: #333333;
-            margin: 15px 0;
-            font-size: 1.8rem;
+            margin: 5px 0;
+            font-size: 1rem;
             width: 90%;
             white-space: nowrap;
             overflow: hidden;
@@ -106,10 +138,10 @@
             transform: translateX(-50%);
         }
         .club-box .image-container {
-            width: 350px;
-            height: 350px;
+            width: 100px;
+            height: 100px;
             position: relative;
-            margin: 60px auto 20px;
+            margin: 35px auto 5px;
             overflow: visible;
         }
         .club-box img {
@@ -120,7 +152,6 @@
             height: 100%;
             object-fit: contain;
             opacity: 0;
-            transition: opacity 4s ease-in-out, width 0.3s ease, height 0.3s ease, top 0.3s ease;
             z-index: 100;
         }
         .club-box img.active {
@@ -130,19 +161,17 @@
         .club-box .info-container {
             display: flex;
             justify-content: space-between;
-            width: 80%;
-            margin: 40px auto;
-            font-size: 1.2rem;
+            width: 90%;
+            margin: 5px auto;
+            font-size: 0.8rem;
             opacity: 0;
-            transition: opacity .8s;
         }
         .club-box .description {
             width: 80%;
-            margin: 20px auto;
-            font-size: 1rem;
-            line-height: 1.5;
+            margin: 5px auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
             opacity: 0;
-            transition: opacity .8s;
             display: none;
         }
         .club-box .left-info,
@@ -153,122 +182,42 @@
             width: 45%;
         }
         .club-box.expanded {
-            height: 400px;
+            height: 180px;
         }
         .club-box.expanded img.active,
         .club-box.expanded .info-container {
             opacity: 1;
         }
-        .club-box.expanded-clicked {
-            height: 700px;
-            width: 350px !important;
-            background: #e0e0e0;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2000;
+        .expand-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #ffffff;
+            color: #333333;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            z-index: 3000;
         }
-        .club-box.expanded-clicked::before {
-            content: '';
-            display: block;
-            height: 300px;
-            visibility: hidden;
+        .expand-button:hover {
+            background-color: #f5f5f5;
+            border-color: #ff3333;
+            color: #ff3333;
         }
-        .club-box.expanded-clicked .image-container {
-            height: 150px;
-            margin: 20px auto;
-        }
-        .club-box.expanded-clicked h3 {
-            font-size: 1.8rem;
-            margin: 15px 0;
-            top: 0;
-        }
-        .club-box.expanded-clicked .info-container {
-            opacity: 1;
-            font-size: 1.1rem;
-            margin: 20px auto;
-        }
-        .club-box.expanded-clicked .description {
-            display: block;
-            opacity: 1;
-            padding: 20px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        .overlay {
-            display: none;
+        .expanded-view {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 500;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            background: #ffffff;
+            z-index: 9999;
+            overflow: auto;
         }
-        .overlay.show {
-            opacity: 1;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        .expanding {
-            position: fixed;
-            top: var(--start-top);
-            left: var(--start-left);
-            width: 300px;
-            height: 150px;
-            background: #fff;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            animation: expandSmooth 1.4s forwards;
-            overflow: hidden;
-        }
-        @keyframes expandSmooth {
-            to {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-                top: 0;
-                left: 0;
-            }
-        }
-        .expanding h2 {
-            font-size: 1.5rem;
-            color: #333;
-            position: absolute;
-            animation: growText 1.4s forwards;
-            opacity: 1;
-            transform-origin: center;
-            top: var(--start-top);
-            left: var(--start-left);
-        }
-        @keyframes growText {
-            to {
-                font-size: 3rem;
-                color: #ff3333;
-                top: 5%;
-                left: 50%;
-                transform: translateX(-50%);
-                position: absolute;
-            }
-        }
-        .expanding img {
-            opacity: 1;
-            animation: fadeOut 54s forwards;
-            z-index: 15;
-        }
-        @keyframes fadeOut {
-            to { opacity: 0; }
-        }
-        .club-boxes.show {
-            display: block;
-            opacity: 1;
-            z-index: 1000;
+        .expanded-view .club-boxes {
+            transform: none;
+            height: 100vh;
+            padding: 20px;
         }
         @keyframes fadeIn {
             to {
@@ -277,48 +226,7 @@
             }
         }
         .disabled { pointer-events: none; }
-        body.no-scroll {
-            overflow: hidden;
-        }
-        .club-box.expanded .image-container {
-            opacity: 1;
-        }
-        #clubContainer {
-            position: relative;
-        }
-        #clubContainer > div {
-            position: relative;
-            z-index: 1;
-        }
-        .club-box.expanded-clicked .image-container {
-            height: 250px;
-            margin: 20px auto;
-        }
-        .club-box.expanded-clicked img {
-            width: 120%;
-            height: 120%;
-            top: -40px;
-            left: -10%;
-        }
-        .return-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #ffffff;
-            color: #333333;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            z-index: 3000;
-        }
-        .return-button:hover {
-            background-color: #f5f5f5;
-            border-color: #ff3333;
-            color: #ff3333;
-        }
+        body.no-scroll { overflow: hidden; }
     </style>
 </head>
 <body>
@@ -326,36 +234,30 @@
         <h1>Today at <span>TZ</span></h1>
     </header>
     <div class="content">
-        <a href="" class="card clubs" id="clubsCard">
+        <div class="card clubs" id="clubsCard">
             <h2>Clubs Today</h2>
-            <img src="images/clubs.jpg" alt="Clubs" id="clubsImage">
+            <button class="expand-button" onclick="expandView()">Expand View</button>
+            <div class="club-boxes" id="clubBoxes">
+                <div id="clubContainer"></div>
+            </div>
+        </div>
+        <a href="#" class="card basketball" id="basketballCard">
+            <h2>Basketball Game<br>Against Pearl River!</h2>
+            <img src="images/basketball.webp" alt="Basketball Game">
         </a>
-        <a href="" class="card studentGames" id="studentGamesCard">
-            <h2>Student Made Games</h2>
-            <iframe width="560" height="360"
-                src="file:///C:/Users/fvadasz/OneDrive%20-%20South%20Orangetown%20Central%20School%20District/Documents/GitHub/colossal-capstones-project/index.html"frameborder="0"
-                allowfullscreen>
-            </iframe>
-        </a>
-        <a href="" class="card fundraisers" id="fundraisersCard">
+        <a href="#" class="card fundraisers" id="fundraisersCard">
             <h2>Fund Raisers</h2>
             <img src="images/fundraisers.png" alt="Fund Raisers">
         </a>
     </div>
 
-    <div class="club-boxes" id="clubBoxes">
-        <button class="return-button" onclick="returnToHome()">Return to Homepage</button>
-        <div id="clubContainer"></div>
-    </div>
-
-    <div class="overlay" id="overlay"></div>
-
     <script>
         const API_KEY = 'AIzaSyDGgqdOZmTZ4vrLDHNFRg92AtK19_e5lsA';
         const CALENDAR_ID = '0jtv97uq2qqepm5mh7ef8dh1fs@group.calendar.google.com';
         
+        // Club data array with all club information
         const clubData = [
-            ['Academic League', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'This club engages in team competition against other Rockland County high schools by answering questions based on high school curricula and general knowledge questions, such as, sports, pop culture and trivia. The format is a buzzer lock-out system as used in "College Bowl" or "Jeopardy." Meetings are held weekly after school from September through May. From December through March, club members will compete against a different school each week. (Best two out of three 20-minute rounds).'],
+        ['Academic League', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'This club engages in team competition against other Rockland County high schools by answering questions based on high school curricula and general knowledge questions, such as, sports, pop culture and trivia. The format is a buzzer lock-out system as used in "College Bowl" or "Jeopardy." Meetings are held weekly after school from September through May. From December through March, club members will compete against a different school each week. (Best two out of three 20-minute rounds).'],
             ['Acapella/Accafella/Bella', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'Acafellas is a male a cappella ensemble and Bella Acapella is a female a cappella ensemble. Both ensembles perform throughout the year at schools and community events. Repertoire is centered on 3 & 4 part a cappella music including popular and classic standards of male and female quartet music. The ensembles rehearse weekly, rehearsing together and on alternating Mondays, 3:30-4:00PM, as announced each preceding Monday.'],
             ['Aquaponics', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'In this hands-on club, students will learn the definition and importance of aquaponics. Students will explore how to set up and maintain an aquaponics system, including proper fish and plant care. The biology and chemistry of the aquaponics system is also addressed. The goal each year is to harvest and enjoy the herbs and vegetables..'],
             ['Art Service Club', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'Students create signs, posters, murals and flyers using their artistic abilities to enhance our school environment and support school functions. This club runs as an advertising agency, creating works and meeting deadlines.'],
@@ -412,8 +314,7 @@
             ['TV Production', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'The purpose of this club is to provide students with the opportunity to work on developing the skills and experience needed to produce television/media programming. This club will be an outlet for students whose scheduling will not allow for them to be enrolled in the TV production class as well as giving students the additional time and support needed to complete TV productions. Students can also contribute to the weekly video announcements. Students in the club are eligible to participate in the Film Festival hosted by Piermont Library in June.'],
             ['TZ United', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'TZ United is a joint venture between students, student-athletes and the COVE program at Tappan Zee high school. In an effort to foster a greater sense of community and provide an overall feeling of inclusion amongst all students at Tappan Zee high school, TZ United offers the opportunity for students and athletes to engage with the students in the COVE program in a variety of sports and activities throughout the school year. During the sessions, all students will work on the fundamentals of sports as well as on forming meaningful, personal relationships.'],
             ['VAASA', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'Varsity Athletes Against Substance Abuse is a peer-to-peer program in which junior and senior varsity athletes take an oath to remain drug, alcohol, tobacco and vape free. Members are trained to serve as role models for younger children and conduct classroom presentations. Additional activities will be planned as well as program meetings. Juniors and seniors who play at least one varsity sport are eligible.'],
-            ['Yearbook', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'Students are involved in all phases of design and production of the high school yearbook, which is, in essence, a log of the school year. Yearbook membership is open to all students at TZHS.'],
-        ];
+            ['Yearbook', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'Students are involved in all phases of design and production of the high school yearbook, which is, in essence, a log of the school year. Yearbook membership is open to all students at TZHS.'],        ];
 
         async function getEventsForToday() {
             const specificDate = new Date(2025, 0, 6);
@@ -441,112 +342,134 @@
             }
         }
 
+        function createBox(clubInfo, index) {
+            const [title, images, room, time, gcCode, remindCode, description] = clubInfo;
+            const box = document.createElement('div');
+            box.className = 'club-box';
+            box.style.transform = `translateY(${10 * index}px)`;
+            
+            const h3 = document.createElement('h3');
+            h3.textContent = title;
+            box.appendChild(h3);
+            
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'image-container';
+            
+            images.forEach((src, i) => {
+                const img = document.createElement('img');
+                img.src = `images/${src}`;
+                img.className = i === 0 ? 'active' : '';
+                imageContainer.appendChild(img);
+            });
+            
+            box.appendChild(imageContainer);
+            
+            const infoContainer = document.createElement('div');
+            infoContainer.className = 'info-container';
+            
+            const leftInfo = document.createElement('div');
+            leftInfo.className = 'left-info';
+            leftInfo.innerHTML = `
+                <span>Time: ${time}</span>
+                <span>Room: ${room}</span>
+            `;
+            
+            const rightInfo = document.createElement('div');
+            rightInfo.className = 'right-info';
+            rightInfo.innerHTML = `
+                <span>GC Code: ${gcCode}</span>
+                <span>Remind: ${remindCode}</span>
+            `;
+            
+            infoContainer.appendChild(leftInfo);
+            infoContainer.appendChild(rightInfo);
+            box.appendChild(infoContainer);
+            
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.className = 'description';
+            descriptionDiv.textContent = description;
+            box.appendChild(descriptionDiv);
+
+            box.addEventListener('click', function(event) {
+                const clubBoxes = document.getElementById('clubBoxes');
+                const clubsCard = document.getElementById('clubsCard');
+                
+                if (this.classList.contains('expanded-box')) {
+                    // Reset to normal view
+                    this.classList.remove('expanded-box');
+                    this.style.height = '180px';
+                    clubBoxes.classList.remove('no-scroll');
+                    this.querySelector('.description').style.display = 'none';
+                    clubBoxes.style.overflow = 'auto';
+                } else {
+                    // Reset any other expanded boxes
+                    document.querySelectorAll('.club-box').forEach(b => {
+                        b.classList.remove('expanded-box');
+                        b.style.height = '180px';
+                        b.querySelector('.description').style.display = 'none';
+                    });
+                    
+                    // Expand this box immediately without animation
+                    this.classList.add('expanded-box');
+                    this.style.height = `${clubsCard.offsetHeight - 60}px`;
+                    clubBoxes.classList.add('no-scroll');
+                    this.querySelector('.description').style.display = 'block';
+                    clubBoxes.style.overflow = 'hidden';
+                    
+                    // Make sure images are visible
+                    const allImages = this.querySelectorAll('.image-container img');
+                    allImages.forEach(img => {
+                        if (img.classList.contains('active')) {
+                            img.style.opacity = '1';
+                            img.style.zIndex = '200';
+                        }
+                    });
+                }
+                
+                event.stopPropagation();
+            });
+            
+            box.addEventListener('wheel', function(event) {
+                if (this.classList.contains('expanded-box')) {
+                    const isAtTop = this.scrollTop === 0;
+                    const isAtBottom = this.scrollHeight - this.scrollTop === this.clientHeight;
+                    
+                    if (!(isAtTop && event.deltaY < 0) && !(isAtBottom && event.deltaY > 0)) {
+                        event.stopPropagation();
+                    }
+                }
+            }, { passive: false });
+            
+            return box;
+        }
+
         async function createClubBoxes() {
             const events = await getEventsForToday();
             const container = document.getElementById('clubContainer');
             const grid = document.createElement('div');
             
-            const titles = events.length ? events.map(e => e.summary) : ['No clubs today'];
+            const activeClubs = events.length ? 
+                events.map(e => clubData.find(c => c[0] === e.summary)).filter(Boolean) : 
+                [['No clubs today', ['img1.jpg'], 'N/A', 'N/A', 'N/A', 'N/A', 'No clubs are scheduled for today.']];
+            
             let columns;
-            if (titles.length <= 4) columns = 2;
-            else if (titles.length <= 6) columns = 3;
-            else columns = 4;
+            if (activeClubs.length <= 4) columns = 1;
+            else if (activeClubs.length <= 6) columns = 2;
+            else columns = 3;
             
             grid.style.cssText = `
                 display: grid;
                 grid-template-columns: repeat(${columns},1fr);
-                gap: 420px;
+                gap: 10px;
                 width: 95%;
                 margin: 0 auto;
-                padding-top: 150px;
+                padding-top: 10px;
                 position: relative;
                 transform: translateZ(0);
                 justify-content: center;
             `;
-            
-            const createBox = (title, index) => {
-                const clubInfo = clubData.find(club => club[0].toLowerCase() === title.toLowerCase()) || [title, ['img1.jpg', 'img2.jpg', 'img3.jpg'], "No description available", "TBD", "TBD", "N/A", "N/A"];
-                const [_, images, room, time, classCode, remindCode, description] = clubInfo;
-                const box = document.createElement('div');
-                box.className = 'club-box';
-                
-                box.style.position = 'absolute';
-                const row = Math.floor(index / columns);
-                const col = index % columns;
-                
-                const horizontalSpacing = 460;
-                box.style.left = `${col * horizontalSpacing}px`;
-                box.style.top = `${row * 440}px`;
-                
-                const h3 = document.createElement('h3');
-                h3.textContent = title;
-                box.appendChild(h3);
 
-                const imageContainer = document.createElement('div');
-                imageContainer.className = 'image-container';
-                
-                images.forEach((img, i) => {
-                    const imgElement = document.createElement('img');
-                    imgElement.src = `images/${img}`;
-                    imgElement.alt = "Club Image";
-                    imgElement.className = i === 0 ? 'active' : '';
-                    imageContainer.appendChild(imgElement);
-                });
-                box.appendChild(imageContainer);
-
-                const infoContainer = document.createElement('div');
-                infoContainer.className = 'info-container';
-
-                const leftInfo = document.createElement('div');
-                leftInfo.className = 'left-info';
-                leftInfo.innerHTML = `
-                    <div>Google Classroom: ${classCode}</div>
-                    <div>Remind Code: ${remindCode}</div>
-                `;
-
-                const rightInfo = document.createElement('div');
-                rightInfo.className = 'right-info';
-                rightInfo.innerHTML = `
-                    <div>Time: ${time}</div>
-                    <div>Room: ${room}</div>
-                `;
-
-                infoContainer.appendChild(leftInfo);
-                infoContainer.appendChild(rightInfo);
-                box.appendChild(infoContainer);
-
-                const descriptionDiv = document.createElement('div');
-                descriptionDiv.className = 'description';
-                descriptionDiv.textContent = description;
-                box.appendChild(descriptionDiv);
-
-                box.addEventListener('click', (e) => {
-                    // Get all expanded boxes
-                    const expandedBoxes = document.querySelectorAll('.club-box.expanded-clicked');
-                    
-                    // If this box is already expanded, close it
-                    if (box.classList.contains('expanded-clicked')) {
-                        box.classList.remove('expanded-clicked');
-                        box.style.zIndex = '1';
-                    } 
-                    // If this box isn't expanded, close any other expanded boxes and expand this one
-                    else {
-                        // Close all other expanded boxes
-                        expandedBoxes.forEach(expandedBox => {
-                            expandedBox.classList.remove('expanded-clicked');
-                            expandedBox.style.zIndex = '1';
-                        });
-                        
-                        // Expand this box
-                        box.classList.add('expanded-clicked');
-                        box.style.zIndex = '2000';
-                    }
-                });
-
-                return box;
-            };
-
-            titles.forEach((title, index) => grid.appendChild(createBox(title, index)));
+            activeClubs.forEach((club, index) => grid.appendChild(createBox(club, index)));
             
             container.innerHTML = '';
             container.appendChild(grid);
@@ -569,35 +492,27 @@
             }, 1500);
         }
 
-        clubsCard.addEventListener('click', (e) => {
-            e.preventDefault();
-            const rect = clubsCard.getBoundingClientRect();
-            clubsCard.style.setProperty('--start-top', `${rect.top - 97}px`);
-            clubsCard.style.setProperty('--start-left', `${rect.left + 44}px`);
+        function expandView() {
+            const expandedView = document.createElement('div');
+            expandedView.className = 'expanded-view';
             
-            if (!clubsCard.classList.contains('expanding')) {
-                document.body.classList.add('no-scroll');
-                studentGamesCard.classList.add('disabled');
-                fundraisersCard.classList.add('disabled');
-                clubsCard.classList.add('expanding');
-                clubsImage.style.opacity = '0';
-                clubsCard.style.pointerEvents = 'none';
-
-                setTimeout(() => {
-                    clubBoxes.style.display = 'block';
-                    clubBoxes.classList.add('show');
-                    setTimeout(() => {
-                        document.querySelectorAll('.club-box').forEach(box => box.classList.add('expanded'));
-                    }, 500);
-                }, 600);
-            }
-        });
+            const clubBoxesClone = document.querySelector('.club-boxes').cloneNode(true);
+            const closeButton = document.createElement('button');
+            closeButton.className = 'expand-button';
+            closeButton.textContent = 'Close';
+            closeButton.onclick = () => {
+                document.body.removeChild(expandedView);
+                document.body.classList.remove('no-scroll');
+            };
+            
+            clubBoxesClone.insertBefore(closeButton, clubBoxesClone.firstChild);
+            expandedView.appendChild(clubBoxesClone);
+            
+            document.body.appendChild(expandedView);
+            document.body.classList.add('no-scroll');
+        }
 
         document.addEventListener('DOMContentLoaded', createClubBoxes);
-
-        function returnToHome() {
-            window.location.href = 'index.html'; 
-        }
     </script>
 </body>
-</html> 
+</html>
