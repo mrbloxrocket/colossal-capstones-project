@@ -93,7 +93,7 @@
         }
         .club-box.expanded-box {
             height: 100%;
-            position: absolute;
+            position: relative;
             left: -2%;
             top: 0;
             right: 0;
@@ -102,7 +102,7 @@
             z-index: 100;
             padding: 20px;
             overflow-y: auto;
-            width: 98%;
+            width: 150%;
             margin: 0;
         }
         .club-box.expanded-box .image-container {
@@ -320,7 +320,7 @@
             ['Yearbook', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'Students are involved in all phases of design and production of the high school yearbook, which is, in essence, a log of the school year. Yearbook membership is open to all students at TZHS.'],        ];
 
         async function getEventsForToday() {
-            const specificDate = new Date(2025, 0, 6);
+            const specificDate = new Date(2025, 3, 3);
             const startOfDay = new Date(specificDate.getFullYear(), specificDate.getMonth(), specificDate.getDate()).toISOString();
             const endOfDay = new Date(specificDate.getFullYear(), specificDate.getMonth(), specificDate.getDate() + 1).toISOString();
             
