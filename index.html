@@ -320,7 +320,7 @@
             ['Yearbook', ['img1.jpg', 'img2.jpg', 'img3.jpg'], 'room', 'time', 'gc code', 'remind code', 'Students are involved in all phases of design and production of the high school yearbook, which is, in essence, a log of the school year. Yearbook membership is open to all students at TZHS.'],        ];
 
         async function getEventsForToday() {
-            const specificDate = new Date(2025, 3, 3);
+            const specificDate = new Date();
             const startOfDay = new Date(specificDate.getFullYear(), specificDate.getMonth(), specificDate.getDate()).toISOString();
             const endOfDay = new Date(specificDate.getFullYear(), specificDate.getMonth(), specificDate.getDate() + 1).toISOString();
             
