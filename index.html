@@ -15,8 +15,8 @@
             background: #f5f5f5;
             text-align: center;
             padding: 2px 1px;
-            border-radius: 20px;
-            margin: 8px;
+            border-radius: 0px;
+            box-shadow: 0 0 7px rgba(0,0,0,0.5);
         }
         header h1 {
             font-size: 2.5rem;
@@ -37,7 +37,7 @@
         .card {
             background: #e4e4e4;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 0 7px rgba(0,0,0,0.5);
             text-align: center;
             padding: 10px;
             position: relative;
@@ -59,6 +59,10 @@
             overflow: hidden;
         }
         .basketball { grid-area: basketball; width: 600px; height: 450px; }
+        .basketball iframe{
+            border-radius: 10px;
+
+        }
         .fundraisers { grid-area: fundraisers; width: 500px; }
         .club-boxes {
             display: block;
@@ -199,7 +203,7 @@
             background-color: #ffffff;
             color: #333333;
             border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 0 7px rgba(0,0,0,0.5);
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.8rem;
@@ -235,6 +239,7 @@
 <body>
     <header>
         <h1>Today at <span>TZ</span></h1>
+        <img src="https://blogs.socsd.org/2016socsd/files/2016/07/socsdicon-t74jey.png" alt="South Orangetown Central School District" id="logo" data-height-percentage="54" data-actual-width="97" data-actual-height="70">
     </header>
     <div class="content">
         <div class="card clubs" id="clubsCard">
@@ -246,7 +251,7 @@
         </div>
         <a href="#" class="card basketball" id="basketballCard">
             <h2>Basketball Game<br>Against Pearl River!</h2>
-            <img src="images/basketball.webp" alt="Basketball Game">
+            <iframe src="https://events.locallive.tv/schools/tappan-zee-hs" height="370" width="590" title="bleh bleh bleh"></iframe>
         </a>
         <a href="#" class="card fundraisers" id="fundraisersCard">
             <h2>Fund Raisers</h2>
