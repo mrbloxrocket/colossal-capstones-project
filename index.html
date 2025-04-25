@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smooth Button Expansion</title>
+    <title>Tappan Zee High School - Colossus</title>
     <style>
         body {
             margin: 0;
@@ -29,8 +29,8 @@
         .content {
             display: grid;
             grid-template-areas: 
-                "clubs basketball"
-                "fundraisers basketball";
+                "clubs Sports"
+                "fundraisers Sports";
             gap: 20px;
             margin: 20px;
         }
@@ -58,8 +58,12 @@
             height: 450px;
             overflow: hidden;
         }
-        .basketball { grid-area: basketball; width: 600px; height: 450px; }
-        .basketball iframe{
+        .Sports { grid-area: Sports; width: 600px; height: 450px; }
+        .Sports iframe{
+            position: absolute;
+            top: 11.4%;
+            left: 1.75%;
+            border:#333;
             border-radius: 10px;
 
         }
@@ -249,9 +253,9 @@
                 <div id="clubContainer"></div>
             </div>
         </div>
-        <a href="#" class="card basketball" id="basketballCard">
-            <h2>Basketball Game<br>Against Pearl River!</h2>
-            <iframe src="https://events.locallive.tv/schools/tappan-zee-hs" height="370" width="590" title="bleh bleh bleh"></iframe>
+        <a href="#" class="card Sports" id="SportsCard">
+            <h2>Recent Sports Events</h2>
+            <iframe src="https://events.locallive.tv/schools/tappan-zee-hs" height="410" width="600" title="bleh bleh bleh"></iframe>
         </a>
         <a href="#" class="card fundraisers" id="fundraisersCard">
             <h2>Fund Raisers</h2>
